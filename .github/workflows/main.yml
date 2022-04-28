@@ -25,11 +25,18 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      # - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - uses: actions/setup-node@v3
+        with:
+          cache: 'npm'
+        
+      # Check by Snyk
+      - name: Run Snyk to check for hexlet-ci-app
+        uses: snyk/actions@0.3.0
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          # SNYK_TOKEN=f01deae2-0543-4528-ae82-4b069c2ae155
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script (и печать на экран)
